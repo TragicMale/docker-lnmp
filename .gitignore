@@ -4,3 +4,5 @@ data/redis/*
 log/mysql/*
 log/nginx/*
 log/php/*
+!conf/nginx/xxx.conf
+conf/nginx/*
