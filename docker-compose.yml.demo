@@ -28,7 +28,7 @@ services:
       - "6379:6379"
     volumes:
       - "./data/redis:/data"
-    command: --appendonly yes 
+    command: --appendonly yes
     # --requirepass "root"
   php-fpm:
     image: lachata/php-fpm:7.4
@@ -41,7 +41,7 @@ services:
       - "9000:9000"
     volumes:
       - ./conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      - ./log/php:/var/log/php
+      # - ./log/php:/var/log/php
       - ${API_PATH}:/var/www/html/xxx
   nginx:
     image: nginx:stable
