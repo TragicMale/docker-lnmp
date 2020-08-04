@@ -7,3 +7,4 @@ log/php/*
 conf/nginx/*
 !conf/nginx/xxx.conf.demo
 docker-compose.yml
+.env
