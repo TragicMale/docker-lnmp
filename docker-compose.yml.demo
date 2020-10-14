@@ -14,8 +14,16 @@ services:
       - "3306:3306"
     volumes:
       - "./data/mysql:/var/lib/mysql"
-      - "./log/mysql:/var/log/mysql"
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time-zone=+8:00 --log-error=/var/lib/mysql/error.log --slow_query_log_file=/var/lib/mysql/slow.log --slow_query_log=ON --long_query_time=0
+      - "./conf/mysql/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf"
+    # command: 
+      # --default_authentication_plugin=mysql_native_password
+      # --character-set-server=utf8mb4
+      # --collation-server=utf8mb4_unicode_ci
+      # --default-time-zone=+8:00
+      # --log-error=/var/lib/mysql/error.log
+      # --slow_query_log=ON
+      # --long_query_time=0.1
+      # --slow_query_log_file=/var/lib/mysql/slow.log
   redis:
     image: redis:6
     restart: always
@@ -31,8 +39,8 @@ services:
     command: --appendonly yes
     # --requirepass "root"
   php-fpm:
-    image: lachata/php-fpm:7.4
-    # build: container/php-fpm
+    # image: lachata/php-fpm:7.4
+    build: container/php-fpm
     restart: always
     container_name: php-fpm
     networks:
@@ -41,8 +49,8 @@ services:
       - "9000:9000"
     volumes:
       - ./conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
-      # - ./log/php:/var/log/php
-      - ${API_PATH}:/var/www/html/xxx
+      # - ./log/php:/usr/local/var/log
+      - /home/user/xxx:/var/www/html/xxx
   nginx:
     image: nginx:stable
     restart: always
@@ -56,7 +64,7 @@ services:
     volumes:
       - "./conf/nginx:/etc/nginx/conf.d:ro"
       - "./log/nginx:/var/log/nginx"
-      - "${API_PATH}:/usr/share/nginx/html/admin:ro"
+      - "/home/user/xxx:/usr/share/nginx/html/xxx:ro"
     depends_on:
       - php-fpm
 networks:

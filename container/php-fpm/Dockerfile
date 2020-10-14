@@ -33,10 +33,14 @@ RUN docker-php-ext-enable xdebug
 # 安装自带扩展
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install zip
 
 RUN apt autoremove -y
 
 RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+RUN curl -o /usr/local/bin/composer https://mirrors.aliyun.com/composer/composer.phar && chmod +x /usr/local/bin/composer
+RUN composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 # 通过entrypoint 修改挂载目录权限为www-data
 # 容器内 www-data 和 宿主机 UID不一致，无法两边同时编辑
