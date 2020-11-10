@@ -10,6 +10,7 @@ RUN apt-get install -y \
         libjpeg62-turbo-dev \
         libpng-dev \
         zlib1g-dev \
+        libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
@@ -23,8 +24,8 @@ RUN pecl install redis-5.1.1
 RUN docker-php-ext-enable redis
 
 # xlswriter扩展
-RUN pecl install xlswriter
-RUN docker-php-ext-enable xlswriter
+# RUN pecl install xlswriter
+# RUN docker-php-ext-enable xlswriter
 
 # xdebug扩展
 RUN pecl install xdebug
