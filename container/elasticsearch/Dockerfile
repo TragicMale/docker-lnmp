@@ -13,6 +13,5 @@ COPY elasticsearch-analysis-pinyin-$VERSION.zip .
 RUN ./bin/elasticsearch-plugin install -b file:./elasticsearch-analysis-ik-$VERSION.zip
 RUN ./bin/elasticsearch-plugin install -b file:./elasticsearch-analysis-pinyin-$VERSION.zip
 
-/etc/sysctl.conf
 # 修改elasticsearch用户的 UID GID 和 宿主机用户一致
 RUN groupmod -g 1000 elasticsearch && usermod -u 1000 -g 1000 elasticsearch
