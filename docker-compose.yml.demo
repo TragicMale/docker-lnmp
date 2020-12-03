@@ -67,5 +67,56 @@ services:
       - "/home/user/xxx:/usr/share/nginx/html/xxx:ro"
     depends_on:
       - php-fpm
+  elasticsearch:
+    image: lachata/elasticsearch:7.9.3
+    restart: always
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    networks:
+      - dev
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "./data/elasticsearch:/usr/share/elasticsearch/data"
+      - "./log/elasticsearch:/usr/share/elasticsearch/logs"
+  kibana:
+    image: kibana:7.9.3
+    restart: always
+    container_name: kibana
+    networks:
+      - dev
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+  mongo:
+    image: mongo:4
+    restart: always
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - "./data/mongo:/data/db"
+    networks:
+      - dev
+    ports:
+      - "5601:5601"
+      - "27017:27017"
+  mongo-express:
+    image: mongo-express
+    restart: always
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    networks:
+      - dev
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
 networks:
   dev:

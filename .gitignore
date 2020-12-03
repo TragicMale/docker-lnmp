@@ -1,9 +1,13 @@
 data/html/*
 data/mysql/*
 data/redis/*
+data/elasticsearch/*
+data/mongo/*
 log/mysql/*
 log/nginx/*
 log/php/*
+log/elasticsearch/*
+log/mongo/*
 conf/nginx/*
 !conf/nginx/xxx.conf.demo
 docker-compose.yml
